@@ -108,7 +108,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_e,      exitdwm,       {0} },
+  { MODKEY|ControlMask|ShiftMask, XK_e,      quit,           {1} }, 
   
   //Brightness
   	{ ALTKEY,			                XK_period,	spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%-", NULL } } },
