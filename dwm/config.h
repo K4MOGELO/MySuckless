@@ -1,5 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
+
+#define TERMINAL "st"
+#define TERMCLASS "St"
+#define BROWSER "flatpak run com.brave.Browser"
+
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -51,6 +57,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -101,16 +108,24 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+  
   //Brightness
-	{ 0, XF86XK_MonBrightnessUp,	  spawn,		                SHCMD("brightnessctl set 20%+") },
-	{ 0, XF86XK_MonBrightnessDown,	spawn,		                SHCMD("brightnessctl set 20%-") }, 
+  	{ ALTKEY,			                XK_period,	spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%-", NULL } } },
+  	{ ALTKEY,               			XK_comma,	  spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%+", NULL } } },
+//	{ 0, ALTKEY|ShiftMask,	        XK_Up,      spawn,		    SHCMD("brightnessctl set 20%+") },
+//	{ 0, XF86XK_MonBrightnessDown,	spawn,		                SHCMD("brightnessctl set 20%-") }, 
+  
   //Audio
+
   { 0, XF86XK_AudioMute,		      spawn,		                SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
 	{ 0, XF86XK_AudioRaiseVolume,  	spawn,		                SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +10%;") },
 	{ 0, XF86XK_AudioLowerVolume,	  spawn,	                	SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -10%;") },
   { 0, XF86XK_AudioPrev,       		spawn,                    SHCMD("playerctl previous") },
 	{ 0, XF86XK_AudioNext,   		    spawn,		                SHCMD("playerctl next") },
 	{ 0, XF86XK_AudioPlay,		      spawn,	                  SHCMD("playerctl play-pause") },
+
+  //APPLICATIONS
+  { ALTKEY,			XK_b,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
 };
 
 /* button definitions */
