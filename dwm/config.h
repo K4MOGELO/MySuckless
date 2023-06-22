@@ -72,6 +72,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray
 static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
+#include "exitdwm.c"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
