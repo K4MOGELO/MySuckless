@@ -64,6 +64,8 @@ static const Layout layouts[] = {
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
+#include <X11/XF86keysym.h>
+
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -99,6 +101,16 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },
+  //Brightness
+	{ 0, XF86XK_MonBrightnessUp,	  spawn,		                SHCMD("brightnessctl set 20%+") },
+	{ 0, XF86XK_MonBrightnessDown,	spawn,		                SHCMD("brightnessctl set 20%-") }, 
+  //Audio
+  { 0, XF86XK_AudioMute,		      spawn,		                SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
+	{ 0, XF86XK_AudioRaiseVolume,  	spawn,		                SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +10%;") },
+	{ 0, XF86XK_AudioLowerVolume,	  spawn,	                	SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -10%;") },
+  { 0, XF86XK_AudioPrev,       		spawn,                    SHCMD("playerctl previous") },
+	{ 0, XF86XK_AudioNext,   		    spawn,		                SHCMD("playerctl next") },
+	{ 0, XF86XK_AudioPlay,		      spawn,	                  SHCMD("playerctl play-pause") },
 };
 
 /* button definitions */
