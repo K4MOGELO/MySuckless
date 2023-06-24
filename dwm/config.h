@@ -70,18 +70,15 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *browser[]  = { "firefox", NULL };
-static const char *brave[]  = { "flatpak run com.brave.Browser", NULL };
 
 #include <X11/XF86keysym.h>
 #include "exitdwm.c"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ ALTKEY,                       XK_b,      spawn,          {.v = browser } },
-	{ ALTKEY,                       XK_x,      spawn,          {.v = brave } },
+    ALTKEY,			                  XK_b,      spawn,		       {.v = (const char*[]){ BROWSER, NULL } } ,
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -116,8 +113,8 @@ static const Key keys[] = {
   { MODKEY|ControlMask|ShiftMask, XK_e,      quit,           {1} }, 
   
   //Brightness
-  	{ ALTKEY,			                XK_period,	spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%-", NULL } } },
-  	{ ALTKEY,               			XK_comma,	  spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%+", NULL } } },
+  	{ ALTKEY,			                XK_period,	spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%+", NULL } } },
+  	{ ALTKEY,               			XK_comma,	  spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%-", NULL } } },
 //	{ 0, ALTKEY|ShiftMask,	        XK_Up,      spawn,		    SHCMD("brightnessctl set 20%+") },
 //	{ 0, XF86XK_MonBrightnessDown,	spawn,		                SHCMD("brightnessctl set 20%-") }, 
   
@@ -131,7 +128,6 @@ static const Key keys[] = {
 	{ 0, XF86XK_AudioPlay,		      spawn,	                  SHCMD("playerctl play-pause") },
 
   //APPLICATIONS
-  { ALTKEY,			XK_b,		spawn,		{.v = (const char*[]){ BROWSER, NULL } } },
 };
 
 /* button definitions */
