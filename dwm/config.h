@@ -1,9 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
-
 #define TERMINAL "st"
 #define TERMCLASS "St"
-#define BROWSER "flatpak run com.brave.Browser"
+#define BROWSER "firefox"
+#define BRAVE "flatpak run com.brave.Browser"
 
 
 /* appearance */
@@ -70,12 +70,16 @@ static const Layout layouts[] = {
 /* commands */
 static const char *dmenucmd[] = { "dmenu_run", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *browser[]  = { "firefox", NULL };
+static const char *brave[]  = { "flatpak run com.brave.Browser", NULL };
 
 #include <X11/XF86keysym.h>
 #include "exitdwm.c"
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ ALTKEY,                       XK_b,      spawn,          {.v = browser } },
+	{ ALTKEY,                       XK_x,      spawn,          {.v = brave } },
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
