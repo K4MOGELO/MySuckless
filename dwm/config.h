@@ -5,7 +5,6 @@
 #define BROWSER "firefox"
 #define BRAVE "flatpak run com.brave.Browser"
 
-
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -53,6 +52,8 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "|M|",      centeredmaster },
+	{ ">M>",      centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -78,7 +79,7 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
     ALTKEY,			                  XK_b,      spawn,		       {.v = (const char*[]){ BROWSER, NULL } } ,
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_p,      spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -86,12 +87,14 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY,                       XK_f,	   zoom,           {0} },
+	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -110,15 +113,10 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_e,      exitdwm,       {0} },
-  { MODKEY|ControlMask|ShiftMask, XK_e,      quit,           {1} }, 
-  
-  //Brightness
-  	{ ALTKEY,			                XK_period,	spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%+", NULL } } },
-  	{ ALTKEY,               			XK_comma,	  spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%-", NULL } } },
-//	{ 0, ALTKEY|ShiftMask,	        XK_Up,      spawn,		    SHCMD("brightnessctl set 20%+") },
-//	{ 0, XF86XK_MonBrightnessDown,	spawn,		                SHCMD("brightnessctl set 20%-") }, 
-  
-  //Audio
+  { MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, 
+    { ALTKEY,			                XK_period,	spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%+", NULL } } },
+    { ALTKEY,               			XK_comma,	  spawn,		    {.v = (const char*[]){ "brightnessctl", "set","20%-", NULL } } },
+
 
   { 0, XF86XK_AudioMute,		      spawn,		                SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
 	{ 0, XF86XK_AudioRaiseVolume,  	spawn,		                SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +10%;") },
@@ -127,7 +125,7 @@ static const Key keys[] = {
 	{ 0, XF86XK_AudioNext,   		    spawn,		                SHCMD("playerctl next") },
 	{ 0, XF86XK_AudioPlay,		      spawn,	                  SHCMD("playerctl play-pause") },
 
-  //APPLICATIONS
+
 };
 
 /* button definitions */
